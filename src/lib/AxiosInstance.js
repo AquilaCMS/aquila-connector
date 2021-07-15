@@ -19,4 +19,4 @@ instance.interceptors.request.use(function (config) {
     return config;
 });
 
-export default instance;
+module.exports = instance;
