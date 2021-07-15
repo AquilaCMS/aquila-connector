@@ -1,8 +1,8 @@
-import Axios from '../../axios/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
-export const getPageStatic = async (slug_pageStatic) => {
+const getPageStatic = async (slug_pageStatic) => {
     const postBody = {
         lang    : TMPlang,
         PostBody: {
@@ -21,7 +21,7 @@ export const getPageStatic = async (slug_pageStatic) => {
     }
 };
 
-export const getStatics = async (PostBody = { filter: {}, limit: 10, structure: { content: 1 } }) => {
+const getStatics = async (PostBody = { filter: {}, limit: 10, structure: { content: 1 } }) => {
     try {
         const response = await Axios.post('v2/statics', { PostBody });
         return response.data;
@@ -30,3 +30,8 @@ export const getStatics = async (PostBody = { filter: {}, limit: 10, structure: 
         return { datas: [], count: 0 };
     }
 };
+
+module.exports = {
+    getPageStatic,
+    getStatics
+}

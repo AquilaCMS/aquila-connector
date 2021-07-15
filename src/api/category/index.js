@@ -1,15 +1,15 @@
-import Axios                                from '../../lib/AxiosInstance';
-import { defaultPostBody }                  from './structure';
-import { deepMergeObjects, ConnectorError } from '../../lib/utils';
+const axios = require('../../lib/AxiosInstance');
+const structure = require('./structure');
+const utils = require('../../lib/utils');
 
 const TMPlang = 'fr';
 
-export const getCategories = async (postBody = {}) => {
+const getCategories = async (postBody = {}) => {
     try {
         // Default Postbody for this request
-        const _defaultPostBody = defaultPostBody('', TMPlang);
+        const _defaultPostBody = structure.defaultPostBody('', TMPlang);
         // Merge default Postbody and the requested postbody
-        const _postBody = deepMergeObjects(_defaultPostBody, postBody);
+        const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
         // Call api with the good Postbody
         const response = await Axios.post('v2/categories', _postBody);
         return response.data;
@@ -20,17 +20,17 @@ export const getCategories = async (postBody = {}) => {
 };
 
 
-export const getCategory = async (postBody = {}) => {
+const getCategory = async (postBody = {}) => {
     // Default Postbody for this request
-    const _defaultPostBody = defaultPostBody('', TMPlang);
+    const _defaultPostBody = structure.defaultPostBody('', TMPlang);
     // Merge default Postbody and the requested postbody
-    const _postBody = deepMergeObjects(_defaultPostBody, postBody);
+    const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     // Call api with the good Postbody
     const response = await Axios.post('v2/category', _postBody);
     return response.data;
 };
 
-export const getCategoryProducts = async ({ slug = '', id='', postBody = {} }) => {
+const getCategoryProducts = async ({ slug = '', id='', postBody = {} }) => {
     // Only the slug ? Need to get the id !
     if (slug) {
         const postBodyReq1 = { PostBody: { filter: { 'translation.fr.slug': slug }, limit: 10, page: 1, structure: { translation: 1 } } };
@@ -41,9 +41,9 @@ export const getCategoryProducts = async ({ slug = '', id='', postBody = {} }) =
     if (id) {
         try {
             // Default Postbody for this request
-            const _defaultPostBody = defaultPostBody('getCategoryProducts', TMPlang);
+            const _defaultPostBody = structure.defaultPostBody('getCategoryProducts', TMPlang);
             // Merge default Postbody and the requested postbody
-            const _postBody = deepMergeObjects(_defaultPostBody, postBody);
+            const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
             // Call api with the good Postbody
             const response = await Axios.post(`v2/products/category/${id}`, _postBody);
             return response.data;
@@ -52,5 +52,11 @@ export const getCategoryProducts = async ({ slug = '', id='', postBody = {} }) =
             return { datas: [], count: 0 };
         }
     }
-    throw new ConnectorError(404, 'Category not found');
+    throw new utils.ConnectorError(404, 'Category not found');
 };
+
+module.exports = {
+    getCategories,
+    getCategory,
+    getCategoryProducts
+}

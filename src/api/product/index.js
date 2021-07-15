@@ -1,8 +1,8 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
-export const getProduct = async (type, value) => {
+const getProduct = async (type, value) => {
     const postBody = {
         lang       : TMPlang,
         countviews : true,
@@ -41,7 +41,7 @@ export const getProduct = async (type, value) => {
     // Non-explicite "return null" needed
 };
 
-export const getProductById = async (id) => {
+const getProductById = async (id) => {
     const postBody = {
         lang       : TMPlang,
         countviews : true,
@@ -70,7 +70,7 @@ export const getProductById = async (id) => {
     // Non-explicite "return null" needed
 };
 
-export const getProducts = async (filter = {}) => {
+const getProducts = async (filter = {}) => {
     const postBody = {
         lang    : TMPlang,
         PostBody: {
@@ -94,3 +94,9 @@ export const getProducts = async (filter = {}) => {
         return { datas: [], count: 0 };
     }
 };
+
+module.exports = {
+    getProduct,
+    getProductById,
+    getProducts
+}

@@ -1,9 +1,9 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
 // GET component data
-export const getComponent = async (tag, nsCode) => {
+const getComponent = async (tag, nsCode) => {
     try {
         const response = await axios.post(`v2/component/${tag}/${nsCode}`, { lang: TMPlang });
         return response.data;
@@ -12,3 +12,7 @@ export const getComponent = async (tag, nsCode) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getComponent
+}

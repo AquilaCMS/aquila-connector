@@ -1,9 +1,9 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
-// GET allergens
-export const getBlogList = async () => {
+// GET blog list
+const getBlogList = async () => {
     try {
         const response = await axios.post('v2/site/news', { 
             lang    : TMPlang,
@@ -22,3 +22,7 @@ export const getBlogList = async () => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getBlogList
+}

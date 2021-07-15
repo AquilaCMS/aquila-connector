@@ -1,6 +1,6 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
-export const setContact = async (mode, formdata) => {
+const setContact = async (mode, formdata) => {
     try {
         const response = await axios.post(`v2/contact/${mode}`, formdata, { headers: { 'Content-Type': 'multipart/form-data' } });
         return response.data;
@@ -9,3 +9,7 @@ export const setContact = async (mode, formdata) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    setContact
+}

@@ -1,9 +1,9 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPLang = 'fr';
 
 // GET orders
-export const getOrders = async () => {
+const getOrders = async () => {
     try {
         const PostBody = { sort: { createdAt: -1 }, limit: 100, populate: ['items.id'] };
         const response = await axios.post('v2/orders', {
@@ -18,7 +18,7 @@ export const getOrders = async () => {
 };
 
 // GET order by ID
-export const getOrderById = async (orderId) => {
+const getOrderById = async (orderId) => {
     try {
         const response = await axios.post(`v2/order/${orderId}`, {
             lang    : TMPLang,
@@ -32,7 +32,7 @@ export const getOrderById = async (orderId) => {
 };
 
 // GET order bill
-export const downloadbillOrder = async (billId) => {
+const downloadbillOrder = async (billId) => {
     try {
         return axios({
             url         : 'v2/bills/generatePDF/',
@@ -56,7 +56,7 @@ export const downloadbillOrder = async (billId) => {
 };
 
 // Ask cancel order
-export const askCancelOrder = async (orderId) => {
+const askCancelOrder = async (orderId) => {
     try {
         const res = await axios.put(`v2/order/requestCancel/${orderId}`);
         return res.data;
@@ -65,3 +65,10 @@ export const askCancelOrder = async (orderId) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getOrders,
+    getOrderById,
+    downloadbillOrder,
+    askCancelOrder
+}

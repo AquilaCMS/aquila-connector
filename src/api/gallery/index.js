@@ -1,7 +1,7 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 // GET items gallery
-export const getItemsGallery = async (code) => {
+const getItemsGallery = async (code) => {
     try {
         const response = await axios.get(`v2/gallery/${code}/items`);
         return response.data;
@@ -10,3 +10,7 @@ export const getItemsGallery = async (code) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getItemsGallery
+}

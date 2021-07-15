@@ -1,8 +1,8 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
-export const getBlockCMS = async (code_blockCMS) => {
+const getBlockCMS = async (code_blockCMS) => {
     const postBody = {
         'lang': TMPlang
     };
@@ -16,7 +16,7 @@ export const getBlockCMS = async (code_blockCMS) => {
     }
 };
 
-export const getBlocksCMS = async (blocksCMSCode, postBody={}) => {
+const getBlocksCMS = async (blocksCMSCode, postBody={}) => {
 
     let _postBody = {};
 
@@ -44,3 +44,8 @@ export const getBlocksCMS = async (blocksCMSCode, postBody={}) => {
         return { datas: [], count: 0 };
     }
 };
+
+module.exports = {
+    getBlockCMS,
+    getBlocksCMS
+}

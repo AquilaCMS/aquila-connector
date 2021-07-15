@@ -1,6 +1,5 @@
-// First we need to import axios.js
-import axios  from 'axios';
-import cookie from 'cookie';
+const axios = require('axios');
+const cookie = require('cookie');
 
 const options = {
     // .. where we make our configurations

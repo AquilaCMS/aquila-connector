@@ -1,4 +1,4 @@
-export const defaultPostBody = (type, lang) => {
+const defaultPostBody = (type, lang) => {
     switch (type) {
     case 'getCategoryProducts':
         return {
@@ -37,7 +37,8 @@ export const defaultPostBody = (type, lang) => {
             }
         };
     }
+};
 
-
-
+module.exports = {
+    defaultPostBody
 };

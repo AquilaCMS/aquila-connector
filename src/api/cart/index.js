@@ -1,10 +1,10 @@
-import axios           from '../../lib/AxiosInstance';
-import { unsetCookie } from '../../lib/utils';
+const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 const TMPlang = 'fr';
 
 // GET cart from ID
-export const getCart = async (cartId, cookiesServerInstance) => {
+const getCart = async (cartId, cookiesServerInstance) => {
     const postBody = {
         lang    : TMPlang,
         PostBody: {
@@ -20,7 +20,7 @@ export const getCart = async (cartId, cookiesServerInstance) => {
         return response.data;
     } catch(err) {
         if (err?.response?.data?.status === 404) {
-            unsetCookie('cart_id', cookiesServerInstance);
+            utils.unsetCookie('cart_id', cookiesServerInstance);
         }
         console.error('cart.getCart');
         return null;
@@ -28,7 +28,7 @@ export const getCart = async (cartId, cookiesServerInstance) => {
 };
 
 // Add a product to cart
-export const addToCart = async (cartId, product, qty, selections = undefined) => {
+const addToCart = async (cartId, product, qty, selections = undefined) => {
     try {
         const response = await axios.put('v2/cart/item', {
             cartId,
@@ -47,13 +47,13 @@ export const addToCart = async (cartId, product, qty, selections = undefined) =>
 };
 
 // Remove a product from cart
-export const deleteItem = async (cartId, itemId) => {
+const deleteItem = async (cartId, itemId) => {
     try {
         const res = await axios.delete(`v2/cart/${cartId}/item/${itemId}`);
         return res.data;
     } catch (err) {
         if (err?.response?.data?.status === 404) {
-            unsetCookie('cart_id');
+            utils.unsetCookie('cart_id');
         }
         console.error('cart.deleteItem');
         throw new Error(err?.response?.data?.message);
@@ -61,7 +61,7 @@ export const deleteItem = async (cartId, itemId) => {
 };
 
 // Update quantity of a product from cart
-export const updateQtyItem = async (cartId, itemId, quantity) => {
+const updateQtyItem = async (cartId, itemId, quantity) => {
     try {
         const res = await axios.put('v2/cart/updateQty', {
             item: { _id: itemId, quantity },
@@ -70,7 +70,7 @@ export const updateQtyItem = async (cartId, itemId, quantity) => {
         return res.data;
     } catch (err) {
         if (err?.response?.data?.status === 404) {
-            unsetCookie('cart_id');
+            utils.unsetCookie('cart_id');
         }
         console.error('cart.updateQtyItem');
         throw new Error(err?.response?.data?.message);
@@ -78,7 +78,7 @@ export const updateQtyItem = async (cartId, itemId, quantity) => {
 };
 
 // Set cart addresses
-export const setCartAddresses = async (cartId, addresses) => {
+const setCartAddresses = async (cartId, addresses) => {
     try {
         const res = await axios.put('v2/cart/addresses', {
             cartId,
@@ -87,7 +87,7 @@ export const setCartAddresses = async (cartId, addresses) => {
         return res.data;
     } catch (err) {
         if (err?.response?.data?.status === 404) {
-            unsetCookie('cart_id');
+            utils.unsetCookie('cart_id');
         }
         console.error('cart.setCartAddresses');
         throw new Error(err?.response?.data?.message);
@@ -95,7 +95,7 @@ export const setCartAddresses = async (cartId, addresses) => {
 };
 
 // Transforms a cart into an order
-export const cartToOrder = async (cartId) => {
+const cartToOrder = async (cartId) => {
     try {
         const res = await axios.put('v2/cart/to/order', {
             cartId,
@@ -107,3 +107,12 @@ export const cartToOrder = async (cartId) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getCart,
+    addToCart,
+    deleteItem,
+    updateQtyItem,
+    setCartAddresses,
+    cartToOrder
+}

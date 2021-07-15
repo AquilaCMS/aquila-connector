@@ -1,6 +1,6 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
-export const getNewsletter = async (email) => {
+const getNewsletter = async (email) => {
     try {
         const response = await axios.get(`v2/newsletter/${email}`);
         return response.data;
@@ -10,7 +10,7 @@ export const getNewsletter = async (email) => {
     }
 };
 
-export const setNewsletter = async (email, name = 'DefaultNewsletter', optin) => {
+const setNewsletter = async (email, name = 'DefaultNewsletter', optin) => {
     const postBody = {
         name,
         optin
@@ -24,3 +24,8 @@ export const setNewsletter = async (email, name = 'DefaultNewsletter', optin) =>
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getNewsletter,
+    setNewsletter
+}

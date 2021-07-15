@@ -1,13 +1,12 @@
 {
   "name": "aquila-connector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connector to Aquila",
   "main": "index.js",
   "exports": {
     "./api/": "./src/api/",
     "./lib/": "./src/lib/"
   },
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,8 +1,8 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
-export const getMenu = async (code_category) => {
+const getMenu = async (code_category) => {
     const postBody = {
         'lang': TMPlang
     };
@@ -15,3 +15,7 @@ export const getMenu = async (code_category) => {
         return { datas: {} };
     }
 };
+
+module.exports = {
+    getMenu
+}

@@ -1,5 +1,4 @@
-
-export function getImage(image, size) {
+function getImage(image, size) {
     size = size || '256x256';
     if (image) {
         return `${process.env.NEXT_PUBLIC_IMG_URL}/images/products/${size}/${image._id}/${image.name}`;
@@ -7,7 +6,7 @@ export function getImage(image, size) {
     return '';
 }
 
-export function getMainImage(images, size) {
+function getMainImage(images, size) {
     size = size || '256x256';
     if (images && images[0]) {
         let image = images.find(ou => ou.default); // Get default image
@@ -19,7 +18,7 @@ export function getMainImage(images, size) {
     return '';
 }
 
-export function getTabImageURL(images) {
+function getTabImageURL(images) {
     const size    = 'max-100';
     let imagesTab = [];
 
@@ -31,7 +30,7 @@ export function getTabImageURL(images) {
     return imagesTab;
 }
 
-export function generateSlug({ slug/* , categorySlugs, canonical */ }) {
+function generateSlug({ slug/* , categorySlugs, canonical */ }) {
     return '/p/' + slug;
     /*if (categorySlugs) {
         return `/${categorySlugs.join('/')}/${slug}`;
@@ -39,4 +38,11 @@ export function generateSlug({ slug/* , categorySlugs, canonical */ }) {
         return canonical;
     }
     return '/404';*/
+}
+
+module.exports = {
+    getImage,
+    getMainImage,
+    getTabImageURL,
+    generateSlug
 }

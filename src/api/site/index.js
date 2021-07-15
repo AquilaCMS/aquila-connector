@@ -1,6 +1,6 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
-export const getSiteInfo = async () => {
+const getSiteInfo = async () => {
     try {
         const response    = await axios.post('v2/themeConfig', { 'lang': 'fr','PostBody': {} });
         const themeConfig = response.data;
@@ -17,3 +17,7 @@ export const getSiteInfo = async () => {
         return { datas: {} };
     }
 };
+
+module.exports = {
+    getSiteInfo
+}

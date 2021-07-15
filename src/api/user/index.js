@@ -1,6 +1,6 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
-export const getUser = async (id_user) => {
+const getUser = async (id_user) => {
     try {
         const response = await axios.post(`v2/user/${id_user}`, { PostBody: {
             structure: {
@@ -17,7 +17,7 @@ export const getUser = async (id_user) => {
     }
 };
 
-export const setUser = async (user) => {
+const setUser = async (user) => {
     try {
         const response = await axios.put('v2/user', user);
         return response.data;
@@ -27,7 +27,7 @@ export const setUser = async (user) => {
     }
 };
 
-export const setAddressesUser = async (userId, billingAddress, deliveryAddress, addresses) => {
+const setAddressesUser = async (userId, billingAddress, deliveryAddress, addresses) => {
     try {
         const response = await axios.put('v2/user/addresses', {
             userId,
@@ -42,7 +42,7 @@ export const setAddressesUser = async (userId, billingAddress, deliveryAddress, 
     }
 };
 
-export const resetPassword = async (token, password = undefined) => {
+const resetPassword = async (token, password = undefined) => {
     try {
         const response = await axios.post('v2/user/resetpassword', { token, password });
         return response.data;
@@ -52,7 +52,7 @@ export const resetPassword = async (token, password = undefined) => {
     }
 };
 
-export const validateAccount = async (token) => {
+const validateAccount = async (token) => {
     try {
         const response = await axios.post('v2/user/active/account', { activateAccountToken: token });
         return response.data;
@@ -62,7 +62,7 @@ export const validateAccount = async (token) => {
     }
 };
 
-export const dataUserExport = async (userId) => {
+const dataUserExport = async (userId) => {
     try {
         return axios({
             url         : `v2/rgpd/export/${userId}`,
@@ -80,7 +80,7 @@ export const dataUserExport = async (userId) => {
     }
 };
 
-export const anonymizeUser = async (userId) => {
+const anonymizeUser = async (userId) => {
     try {
         await axios.get(`v2/rgpd/anonymizeUser/${userId}`);
     } catch(err) {
@@ -89,7 +89,7 @@ export const anonymizeUser = async (userId) => {
     }
 };
 
-export const deleteUser = async (userId) => {
+const deleteUser = async (userId) => {
     try {
         await axios.delete(`v2/rgpd/deleteUser/${userId}`);
     } catch(err) {
@@ -97,3 +97,14 @@ export const deleteUser = async (userId) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getUser,
+    setUser,
+    setAddressesUser,
+    resetPassword,
+    validateAccount,
+    dataUserExport,
+    anonymizeUser,
+    deleteUser
+}

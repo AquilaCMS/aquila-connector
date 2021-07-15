@@ -1,11 +1,11 @@
-import axios            from '../../lib/AxiosInstance';
-import { simplifyPath } from '../../lib/utils';
+const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 // GET breadcrumb from URL
-export const getBreadcrumb = async (url) => {
+const getBreadcrumb = async (url) => {
     try {
         const response = await axios.post('v2/getBreadcrumb', {
-            url: simplifyPath(url)
+            url: utils.simplifyPath(url)
         });
         return response.data;
     } catch(err) {
@@ -13,3 +13,7 @@ export const getBreadcrumb = async (url) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getBreadcrumb
+}

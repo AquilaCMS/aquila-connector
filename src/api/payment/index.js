@@ -1,9 +1,9 @@
-import axios from '../../lib/AxiosInstance';
+const axios = require('../../lib/AxiosInstance');
 
 const TMPlang = 'fr';
 
 // GET payment methods
-export const getPaymentMethods = async () => {
+const getPaymentMethods = async () => {
     const PostBody = {
         structure: { component_template_front: 1, makePayment: 1, details: 1 },
         limit    : 100
@@ -22,7 +22,7 @@ export const getPaymentMethods = async () => {
 };
 
 // Deferred payment
-export const deferredPayment = async (orderNumber, paymentCode) => {
+const deferredPayment = async (orderNumber, paymentCode) => {
     try {
         await axios.post(`v2/order/pay/${orderNumber}/${TMPlang}`, {
             paymentMethod: paymentCode
@@ -32,3 +32,8 @@ export const deferredPayment = async (orderNumber, paymentCode) => {
         throw new Error(err?.response?.data?.message);
     }
 };
+
+module.exports = {
+    getPaymentMethods,
+    deferredPayment
+}
