@@ -11,7 +11,7 @@ const getCategories = async (postBody = {}) => {
         // Merge default Postbody and the requested postbody
         const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
         // Call api with the good Postbody
-        const response = await Axios.post('v2/categories', _postBody);
+        const response = await axios.post('v2/categories', _postBody);
         return response.data;
     } catch (err) {
         console.error('Error CategoryProvider getCategories => ', err);
@@ -26,7 +26,7 @@ const getCategory = async (postBody = {}) => {
     // Merge default Postbody and the requested postbody
     const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     // Call api with the good Postbody
-    const response = await Axios.post('v2/category', _postBody);
+    const response = await axios.post('v2/category', _postBody);
     return response.data;
 };
 
@@ -45,7 +45,7 @@ const getCategoryProducts = async ({ slug = '', id='', postBody = {} }) => {
             // Merge default Postbody and the requested postbody
             const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
             // Call api with the good Postbody
-            const response = await Axios.post(`v2/products/category/${id}`, _postBody);
+            const response = await axios.post(`v2/products/category/${id}`, _postBody);
             return response.data;
         } catch (err) {
             console.error('Error CategoryProvider getCategoryProducts => ', err);

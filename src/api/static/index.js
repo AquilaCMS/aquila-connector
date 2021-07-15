@@ -13,7 +13,7 @@ const getPageStatic = async (slug_pageStatic) => {
         }
     };
     try {
-        const response = await Axios.post('v2/static', postBody);
+        const response = await axios.post('v2/static', postBody);
         return response.data;
     } catch (err) {
         console.error('Error StaticProvider getPageStatic => ', err);
@@ -23,7 +23,7 @@ const getPageStatic = async (slug_pageStatic) => {
 
 const getStatics = async (PostBody = { filter: {}, limit: 10, structure: { content: 1 } }) => {
     try {
-        const response = await Axios.post('v2/statics', { PostBody });
+        const response = await axios.post('v2/statics', { PostBody });
         return response.data;
     } catch (err) {
         console.error('Error StaticProvider getStatics => ', err);
