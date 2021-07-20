@@ -10,11 +10,14 @@ const options = {
 const instance = axios.create(options);
 
 instance.interceptors.request.use(function (config) {
-    const jwt = typeof window !== 'undefined' ? cookie.parse(document.cookie).jwt : null;
-    if (jwt) {
-        config.headers.Authorization = jwt;
-    } else {
-        delete config.headers.Authorization;
+    if (typeof window !== 'undefined') {
+        // Set JWT
+        const jwt = cookie.parse(document.cookie).jwt;
+        if (jwt) {
+            config.headers.Authorization = jwt;
+        } else {
+            delete config.headers.Authorization;
+        }
     }
     return config;
 });

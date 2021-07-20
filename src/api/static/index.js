@@ -1,14 +1,12 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPlang = 'fr';
-
-const getPageStatic = async (slug_pageStatic) => {
+const getPageStatic = async (slug, lang = 'fr') => {
     const postBody = {
-        lang    : TMPlang,
+        lang,
         PostBody: {
             limit : 1,
             filter: {
-                [`translation.${TMPlang}.slug`]: slug_pageStatic
+                [`translation.${lang}.slug`]: slug
             }
         }
     };

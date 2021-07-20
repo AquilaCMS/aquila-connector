@@ -1,12 +1,10 @@
 const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
-const TMPlang = 'fr';
-
 // GET cart from ID
-const getCart = async (cartId, cookiesServerInstance) => {
+const getCart = async (cartId, lang = 'fr', cookiesServerInstance) => {
     const postBody = {
-        lang    : TMPlang,
+        lang,
         PostBody: {
             structure: {
                 addresses    : 1,
@@ -95,11 +93,11 @@ const setCartAddresses = async (cartId, addresses) => {
 };
 
 // Transforms a cart into an order
-const cartToOrder = async (cartId) => {
+const cartToOrder = async (cartId, lang = 'fr') => {
     try {
         const res = await axios.put('v2/cart/to/order', {
             cartId,
-            lang: TMPlang
+            lang
         });
         return res.data.data;
     } catch (err) {

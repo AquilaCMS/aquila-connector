@@ -1,11 +1,9 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPlang = 'fr';
-
 // GET component data
-const getComponent = async (tag, nsCode) => {
+const getComponent = async (tag, nsCode, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/component/${tag}/${nsCode}`, { lang: TMPlang });
+        const response = await axios.post(`v2/component/${tag}/${nsCode}`, { lang });
         return response.data;
     } catch(err) {
         console.error(`component.getComponent [${tag} code: ${nsCode}]`);

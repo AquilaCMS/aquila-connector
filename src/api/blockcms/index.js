@@ -1,14 +1,8 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPlang = 'fr';
-
-const getBlockCMS = async (code_blockCMS) => {
-    const postBody = {
-        'lang': TMPlang
-    };
-
+const getBlockCMS = async (code, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/component/ns-cms/${code_blockCMS}`, postBody);
+        const response = await axios.post(`v2/component/ns-cms/${code}`, { lang });
         return response.data;
     } catch(e) {
         console.error('Blockcms.getBlockCMS');
@@ -16,28 +10,28 @@ const getBlockCMS = async (code_blockCMS) => {
     }
 };
 
-const getBlocksCMS = async (blocksCMSCode, postBody={}) => {
+const getBlocksCMS = async (codes, lang = 'fr', postBody = {}) => {
 
-    let _postBody = {};
+    let body = {};
 
-    if(blocksCMSCode.length > 0) {
-        _postBody = {   
-            lang    : TMPlang,         
+    if (codes.length > 0) {
+        body = {   
+            lang,         
             PostBody: {
-                filter   : { code: { $in: blocksCMSCode } },
-                limit    : blocksCMSCode.length,
+                filter   : { code: { $in: codes } },
+                limit    : codes.length,
                 structure: { translation: 1 }
             } };
     }
     else {
-        _postBody = {
-            'lang'  : TMPlang,
+        body = {
+            lang,
             PostBody: postBody
         };
     }
 
     try {
-        const response = await axios.post('v2/cmsBlocks', _postBody);
+        const response = await axios.post('v2/cmsBlocks', body);
         return response.data?.datas; // TODO Si y'en a pas ?
     } catch(e) {
         console.error('Blockcms.getBlocksCMS');

@@ -1,10 +1,8 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPlang = 'fr';
-
-const getProduct = async (type, value) => {
+const getProduct = async (type, value, lang = 'fr') => {
     const postBody = {
-        lang       : TMPlang,
+        lang,
         countviews : true,
         withFilters: false,
         PostBody   : {
@@ -25,7 +23,7 @@ const getProduct = async (type, value) => {
         }
     };
     if (type === 'slug') {
-        postBody.PostBody.filter = { [`translation.${TMPlang}.slug`]: value };
+        postBody.PostBody.filter = { [`translation.${lang}.slug`]: value };
     } else {
         postBody.PostBody.filter = { code: value };
     }
@@ -41,9 +39,9 @@ const getProduct = async (type, value) => {
     // Non-explicite "return null" needed
 };
 
-const getProductById = async (id) => {
+const getProductById = async (id, lang = 'fr') => {
     const postBody = {
-        lang       : TMPlang,
+        lang,
         countviews : true,
         withFilters: false,
         PostBody   : {
@@ -70,9 +68,9 @@ const getProductById = async (id) => {
     // Non-explicite "return null" needed
 };
 
-const getProducts = async (filter = {}) => {
+const getProducts = async (filter = {}, lang = 'fr') => {
     const postBody = {
-        lang    : TMPlang,
+        lang,
         PostBody: {
             filter,
             structure: {

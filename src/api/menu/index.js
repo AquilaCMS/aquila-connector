@@ -1,14 +1,8 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPlang = 'fr';
-
-const getMenu = async (code_category) => {
-    const postBody = {
-        'lang': TMPlang
-    };
-
+const getMenu = async (categoryCode, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/component/ns-menu/${code_category}`, postBody);
+        const response = await axios.post(`v2/component/ns-menu/${categoryCode}`, { lang });
         return response.data;
     } catch(err) {
         console.error('menu.getMenu');

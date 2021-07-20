@@ -1,13 +1,11 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPLang = 'fr';
-
 // GET orders
-const getOrders = async () => {
+const getOrders = async (lang = 'fr') => {
     try {
         const PostBody = { sort: { createdAt: -1 }, limit: 100, populate: ['items.id'] };
         const response = await axios.post('v2/orders', {
-            lang: TMPLang,
+            lang,
             PostBody
         });
         return response.data.datas;
@@ -18,10 +16,10 @@ const getOrders = async () => {
 };
 
 // GET order by ID
-const getOrderById = async (orderId) => {
+const getOrderById = async (orderId, lang = 'fr') => {
     try {
         const response = await axios.post(`v2/order/${orderId}`, {
-            lang    : TMPLang,
+            lang,
             PostBody: {}
         });
         return response.data;

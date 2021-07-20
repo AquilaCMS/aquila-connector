@@ -1,15 +1,13 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPlang = 'fr';
-
 // GET blog list
-const getBlogList = async () => {
+const getBlogList = async (lang = 'fr') => {
     try {
-        const response = await axios.post('v2/site/news', { 
-            lang    : TMPlang,
+        const response = await axios.post('v2/site/news', {
+            lang,
             PostBody: {
                 filter: {
-                    [`translation.${TMPlang}`]: { $exists: true }
+                    [`translation.${lang}`]: { $exists: true }
                 },
                 sort : '-createdAt',
                 page : 1,

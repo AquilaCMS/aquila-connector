@@ -2,12 +2,10 @@ const axios = require('../../lib/AxiosInstance');
 const structure = require('./structure');
 const utils = require('../../lib/utils');
 
-const TMPlang = 'fr';
-
-const getCategories = async (postBody = {}) => {
+const getCategories = async (lang = 'fr', postBody = {}) => {
     try {
         // Default Postbody for this request
-        const _defaultPostBody = structure.defaultPostBody('', TMPlang);
+        const _defaultPostBody = structure.defaultPostBody('', lang);
         // Merge default Postbody and the requested postbody
         const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
         // Call api with the good Postbody
@@ -20,9 +18,9 @@ const getCategories = async (postBody = {}) => {
 };
 
 
-const getCategory = async (postBody = {}) => {
+const getCategory = async (lang = 'fr', postBody = {}) => {
     // Default Postbody for this request
-    const _defaultPostBody = structure.defaultPostBody('', TMPlang);
+    const _defaultPostBody = structure.defaultPostBody('', lang);
     // Merge default Postbody and the requested postbody
     const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     // Call api with the good Postbody
@@ -30,18 +28,18 @@ const getCategory = async (postBody = {}) => {
     return response.data;
 };
 
-const getCategoryProducts = async ({ slug = '', id='', postBody = {} }) => {
+const getCategoryProducts = async ({ slug = '', id = '', lang = 'fr', postBody = {} }) => {
     // Only the slug ? Need to get the id !
     if (slug) {
         const postBodyReq1 = { PostBody: { filter: { 'translation.fr.slug': slug }, limit: 10, page: 1, structure: { translation: 1 } } };
-        const category     = await getCategory(postBodyReq1);
+        const category     = await getCategory(lang, postBodyReq1);
         id                 = category._id;
     }
 
     if (id) {
         try {
             // Default Postbody for this request
-            const _defaultPostBody = structure.defaultPostBody('getCategoryProducts', TMPlang);
+            const _defaultPostBody = structure.defaultPostBody('getCategoryProducts', lang);
             // Merge default Postbody and the requested postbody
             const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
             // Call api with the good Postbody

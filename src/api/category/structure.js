@@ -2,7 +2,7 @@ const defaultPostBody = (type, lang) => {
     switch (type) {
     case 'getCategoryProducts':
         return {
-            lang    : lang,
+            lang,
             PostBody: {
                 filter   : {},
                 structure: {
@@ -30,7 +30,7 @@ const defaultPostBody = (type, lang) => {
         };
     default:
         return {
-            lang    : lang,
+            lang,
             PostBody: {
                 filter   : {},
                 structure: '*'

@@ -1,7 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
 
-const TMPLang = 'fr';
-
 const auth = async (username, password) => {
     try {
         const response = await axios.post('v2/auth/login/', { username, password });
@@ -12,9 +10,9 @@ const auth = async (username, password) => {
     }
 };
 
-const sendMailResetPassword = async (email) => {
+const sendMailResetPassword = async (email, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/user/resetpassword/${TMPLang}`, { email });
+        const response = await axios.post(`v2/user/resetpassword/${lang}`, { email });
         return response.data;
     } catch(err) {
         console.error('login.resetPassword');
