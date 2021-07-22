@@ -53,8 +53,8 @@ const deleteItem = async (cartId, itemId) => {
 const updateQtyItem = async (cartId, itemId, quantity) => {
     try {
         const res = await axios.put('v2/cart/updateQty', {
-            item: { _id: itemId, quantity },
-            cartId
+            cartId,
+            item: { _id: itemId, quantity }
         });
         return res.data;
     } catch (err) {

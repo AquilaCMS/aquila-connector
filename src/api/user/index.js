@@ -1,9 +1,9 @@
 const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
-const getUser = async (id_user) => {
+const getUser = async (userId) => {
     try {
-        const response = await axios.post(`v2/user/${id_user}`, { PostBody: {
+        const response = await axios.post(`v2/user/${userId}`, { PostBody: {
             structure: {
                 addresses       : 1,
                 billing_address : 1,

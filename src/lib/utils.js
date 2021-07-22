@@ -14,24 +14,6 @@ const simplifyPath = (path) => {
     return path.split('?')[0].split('/');
 };
 
-const unsetCookie = (name, cookiesServerInstance = undefined) => {
-    if (Array.isArray(name)) {
-        for (const n in name) {
-            if (cookiesServerInstance) {
-                cookiesServerInstance.set(name[n]);
-            } else {
-                document.cookie = name[n] + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            }
-        }
-    } else {
-        if (cookiesServerInstance) {
-            cookiesServerInstance.set(name);
-        } else {
-            document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        }
-    }
-};
-
 class ConnectorError extends Error {
     constructor(code, message = '') {
         super(message);
