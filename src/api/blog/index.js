@@ -1,4 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 // GET blog list
 const getBlogList = async (lang = 'fr') => {
@@ -16,8 +17,7 @@ const getBlogList = async (lang = 'fr') => {
         });
         return response.data.datas;
     } catch(err) {
-        console.error('blog.getBlogList');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 

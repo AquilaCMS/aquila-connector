@@ -1,4 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 // GET orders
 const getOrders = async (lang = 'fr') => {
@@ -9,9 +10,8 @@ const getOrders = async (lang = 'fr') => {
             PostBody
         });
         return response.data.datas;
-    } catch(err) {
-        console.error('order.getOrders');
-        throw new Error(err?.response?.data?.message);
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -23,9 +23,8 @@ const getOrderById = async (orderId, lang = 'fr') => {
             PostBody: {}
         });
         return response.data;
-    } catch(err) {
-        console.error('order.getOrderById');
-        throw new Error(err?.response?.data?.message);
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -42,12 +41,12 @@ const downloadbillOrder = async (billId) => {
                 }
             }
         });
-    } catch(err) {
+    } catch (err) {
         const b   = new Blob([err.response.data]);
         const fr  = new FileReader();
         fr.onload = function () {
             const result = JSON.parse(this.result);
-            throw new Error(result.message);
+            throw new utils.ConnectorError(result.status, result.message);
         };
         fr.readAsText(b);
     }
@@ -59,8 +58,7 @@ const askCancelOrder = async (orderId) => {
         const res = await axios.put(`v2/order/requestCancel/${orderId}`);
         return res.data;
     } catch (err) {
-        console.error('order.askCancelOrder');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 

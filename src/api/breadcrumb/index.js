@@ -9,8 +9,7 @@ const getBreadcrumb = async (url) => {
         });
         return response.data;
     } catch(err) {
-        console.error('breadcrumb.getBreadcrumb');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 

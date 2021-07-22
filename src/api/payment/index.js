@@ -1,4 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 // GET payment methods
 const getPaymentMethods = async (lang = 'fr') => {
@@ -14,8 +15,7 @@ const getPaymentMethods = async (lang = 'fr') => {
         });
         return response.data.datas;
     } catch(err) {
-        console.error('payment.getPaymentMethods');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -26,8 +26,7 @@ const deferredPayment = async (orderNumber, paymentCode, lang = 'fr') => {
             paymentMethod: paymentCode
         });
     } catch (err) {
-        console.error('payment.deferredPayment');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 

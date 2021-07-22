@@ -1,4 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 // GET items gallery
 const getItemsGallery = async (code) => {
@@ -6,8 +7,7 @@ const getItemsGallery = async (code) => {
         const response = await axios.get(`v2/gallery/${code}/items`);
         return response.data;
     } catch(err) {
-        console.error('gallery.getItemsGallery');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 

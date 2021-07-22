@@ -13,7 +13,6 @@ const getSiteInfo = async (lang = 'fr') => {
 
         return { themeConfig: { ...themeConfig.config }, ...config, langs };
     } catch(e) {
-        console.error('site.getSiteInfo');
         return { datas: {} };
     }
 };

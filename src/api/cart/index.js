@@ -2,7 +2,7 @@ const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
 // GET cart from ID
-const getCart = async (cartId, lang = 'fr', cookiesServerInstance) => {
+const getCart = async (cartId, lang = 'fr') => {
     const postBody = {
         lang,
         PostBody: {
@@ -17,11 +17,7 @@ const getCart = async (cartId, lang = 'fr', cookiesServerInstance) => {
         const response = await axios.post(`v2/cart/${cartId}`, postBody);
         return response.data;
     } catch(err) {
-        if (err?.response?.data?.status === 404) {
-            utils.unsetCookie('cart_id', cookiesServerInstance);
-        }
-        console.error('cart.getCart');
-        return null;
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -39,8 +35,7 @@ const addToCart = async (cartId, product, qty, selections = undefined) => {
         });
         return response.data;
     } catch(err) {
-        console.error('cart.addToCart');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -50,11 +45,7 @@ const deleteItem = async (cartId, itemId) => {
         const res = await axios.delete(`v2/cart/${cartId}/item/${itemId}`);
         return res.data;
     } catch (err) {
-        if (err?.response?.data?.status === 404) {
-            utils.unsetCookie('cart_id');
-        }
-        console.error('cart.deleteItem');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -67,11 +58,7 @@ const updateQtyItem = async (cartId, itemId, quantity) => {
         });
         return res.data;
     } catch (err) {
-        if (err?.response?.data?.status === 404) {
-            utils.unsetCookie('cart_id');
-        }
-        console.error('cart.updateQtyItem');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -84,11 +71,7 @@ const setCartAddresses = async (cartId, addresses) => {
         });
         return res.data;
     } catch (err) {
-        if (err?.response?.data?.status === 404) {
-            utils.unsetCookie('cart_id');
-        }
-        console.error('cart.setCartAddresses');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -101,8 +84,7 @@ const cartToOrder = async (cartId, lang = 'fr') => {
         });
         return res.data.data;
     } catch (err) {
-        console.error('cart.cartToOrder');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 

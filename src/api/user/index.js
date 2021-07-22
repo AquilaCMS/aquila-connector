@@ -1,4 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 const getUser = async (id_user) => {
     try {
@@ -12,8 +13,7 @@ const getUser = async (id_user) => {
         } });
         return response.data;
     } catch(err) {
-        console.error('user.getUser');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -22,8 +22,7 @@ const setUser = async (user) => {
         const response = await axios.put('v2/user', user);
         return response.data;
     } catch(err) {
-        console.error('user.setUser');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -37,8 +36,7 @@ const setAddressesUser = async (userId, billingAddress, deliveryAddress, address
         });
         return response.data;
     } catch(err) {
-        console.error('user.setAddressesUser');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -47,8 +45,7 @@ const resetPassword = async (token, password = undefined) => {
         const response = await axios.post('v2/user/resetpassword', { token, password });
         return response.data;
     } catch(err) {
-        console.error('user.resetPassword');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -57,8 +54,7 @@ const validateAccount = async (token) => {
         const response = await axios.post('v2/user/active/account', { activateAccountToken: token });
         return response.data;
     } catch(err) {
-        console.error('user.validateAccount');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -74,7 +70,7 @@ const dataUserExport = async (userId) => {
         const fr  = new FileReader();
         fr.onload = function () {
             const result = JSON.parse(this.result);
-            throw new Error(result.message);
+            throw new utils.ConnectorError(result.status, result.message);
         };
         fr.readAsText(b);
     }
@@ -84,8 +80,7 @@ const anonymizeUser = async (userId) => {
     try {
         await axios.get(`v2/rgpd/anonymizeUser/${userId}`);
     } catch(err) {
-        console.error('user.anonymizeUser');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
@@ -93,8 +88,7 @@ const deleteUser = async (userId) => {
     try {
         await axios.delete(`v2/rgpd/deleteUser/${userId}`);
     } catch(err) {
-        console.error('user.deleteUser');
-        throw new Error(err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
 
