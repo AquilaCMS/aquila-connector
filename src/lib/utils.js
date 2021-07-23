@@ -1,4 +1,4 @@
-// Unset cookie (serverside/clientside)
+// Merge of 2 objects
 const deepMergeObjects = (target, source) => {
     // Iterate through `source` properties and if an `Object` set property to merge of `target` and `source` properties
     for (const key of Object.keys(source)) {
@@ -25,6 +25,5 @@ class ConnectorError extends Error {
 module.exports = {
     deepMergeObjects,
     simplifyPath,
-    unsetCookie,
     ConnectorError
 }
