@@ -18,6 +18,12 @@ instance.interceptors.request.use(function (config) {
         } else {
             delete config.headers.Authorization;
         }
+
+        // Set lang
+        const lang = cookie.parse(document.cookie).lang;
+        if (lang) {
+            config.headers.lang = lang;
+        }
     }
     return config;
 });
