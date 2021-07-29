@@ -30,14 +30,13 @@ function getTabImageURL(images) {
     return imagesTab;
 }
 
-function generateSlug({ slug/* , categorySlugs, canonical */ }) {
-    return '/p/' + slug;
-    /*if (categorySlugs) {
+function generateSlug({ slug , categorySlugs, canonical }) {
+    if (categorySlugs) {
         return `/${categorySlugs.join('/')}/${slug}`;
     } else if (canonical) {
         return canonical;
     }
-    return '/404';*/
+    return false;
 }
 
 module.exports = {
