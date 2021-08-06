@@ -31,6 +31,7 @@ const defaultPostBody = (type, lang) => {
     default:
         return {
             lang,
+            withFilter: true,
             PostBody: {
                 filter   : {},
                 structure: '*'
