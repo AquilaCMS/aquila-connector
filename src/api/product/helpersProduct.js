@@ -1,7 +1,7 @@
 function getImage(image, size) {
     size = size || '256x256';
     if (image) {
-        return `${process.env.NEXT_PUBLIC_IMG_URL}/images/products/${size}/${image._id}/${image.name}`;
+        return `/images/products/${size}/${image._id}/${image.name}`;
     }
     return '';
 }
@@ -13,7 +13,7 @@ function getMainImage(images, size) {
         if(!image) { // No default ?
             image = images[0]; // Take first image
         }
-        return `${process.env.NEXT_PUBLIC_IMG_URL}/images/products/${size}/${image._id}/${image.name}`;
+        return `/images/products/${size}/${image._id}/${image.name}`;
     }
     return '';
 }
@@ -24,7 +24,7 @@ function getTabImageURL(images) {
 
     for (let index = 0; index < images?.length; index++) {
         const image = images[index];
-        imagesTab.push(`${process.env.NEXT_PUBLIC_IMG_URL}/images/products/${size}/${image._id}/${image.name}`);
+        imagesTab.push(`/images/products/${size}/${image._id}/${image.name}`);
     }
 
     return imagesTab;
