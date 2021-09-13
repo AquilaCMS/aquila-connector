@@ -19,7 +19,16 @@ const sendMailResetPassword = async (email, lang = 'fr') => {
     }
 };
 
+const logout = async () => {
+    try {
+        await axios.post(`v2/auth/logout`);
+    } catch(err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+    }
+};
+
 module.exports = {
     auth,
-    sendMailResetPassword
+    sendMailResetPassword,
+    logout
 }
