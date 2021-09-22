@@ -19,12 +19,14 @@ const getPaymentMethods = async (lang = 'fr') => {
     }
 };
 
-// Deferred payment
-const deferredPayment = async (orderNumber, paymentCode, lang = 'fr') => {
+// Make payment
+const makePayment = async (orderNumber, paymentCode, returnURL, lang = 'fr') => {
     try {
-        await axios.post(`v2/order/pay/${orderNumber}/${lang}`, {
-            paymentMethod: paymentCode
+        const response = await axios.post(`v2/order/pay/${orderNumber}/${lang}`, {
+            paymentMethod: paymentCode,
+            returnURL
         });
+        return response.data;
     } catch (err) {
         throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
@@ -32,5 +34,5 @@ const deferredPayment = async (orderNumber, paymentCode, lang = 'fr') => {
 
 module.exports = {
     getPaymentMethods,
-    deferredPayment
+    makePayment
 }
