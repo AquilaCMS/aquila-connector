@@ -1,6 +1,6 @@
 const axios = require('../../lib/AxiosInstance');
 
-const getPageStatic = async (slug, lang = 'fr') => {
+const getPageStatic = async (slug, preview = undefined, lang = 'fr') => {
     const postBody = {
         lang,
         PostBody: {
@@ -11,7 +11,7 @@ const getPageStatic = async (slug, lang = 'fr') => {
         }
     };
     try {
-        const response = await axios.post('v2/static', postBody);
+        const response = await axios.post(`v2/static${preview ? `?preview=${preview}` : ''}`, postBody);
         return response.data;
     } catch (err) {
         console.error('Error StaticProvider getPageStatic => ', err);

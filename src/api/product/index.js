@@ -1,6 +1,6 @@
 const axios = require('../../lib/AxiosInstance');
 
-const getProduct = async (type, value, lang = 'fr') => {
+const getProduct = async (type, value, preview = undefined, lang = 'fr') => {
     const postBody = {
         lang,
         countviews : true,
@@ -29,7 +29,7 @@ const getProduct = async (type, value, lang = 'fr') => {
     }
 
     try {
-        const response = await axios.post('v2/product', postBody);
+        const response = await axios.post(`v2/product${preview ? `?preview=${preview}` : ''}`, postBody);
         return response.data;
     } catch(e) {
         console.error('product.getProduct');
