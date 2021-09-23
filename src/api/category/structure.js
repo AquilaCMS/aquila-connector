@@ -34,7 +34,11 @@ const defaultPostBody = (type, lang) => {
             withFilter: true,
             PostBody: {
                 filter   : {},
-                structure: '*'
+                structure: '*',
+                populate: { 
+                    path: 'children', 
+                    match: { active: true, openDate: {$lte: new Date()}, $or: [{closeDate: {$gte: new Date()}}, {closeDate: {$exists: false}}] }
+                }
             }
         };
     }
