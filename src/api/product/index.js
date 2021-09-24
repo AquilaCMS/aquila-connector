@@ -1,4 +1,5 @@
 const axios = require('../../lib/AxiosInstance');
+const utils = require('../../lib/utils');
 
 const getProduct = async (type, value, preview = undefined, lang = 'fr') => {
     const postBody = {
@@ -68,11 +69,10 @@ const getProductById = async (id, lang = 'fr') => {
     // Non-explicite "return null" needed
 };
 
-const getProducts = async (filter = {}, lang = 'fr') => {
-    const postBody = {
+const getProducts = async (withFilters, postBody = {}, lang = 'fr') => {
+    const _defaultPostBody = {
         lang,
         PostBody: {
-            filter,
             structure: {
                 code           : 1,
                 attributes     : 1,
@@ -83,12 +83,12 @@ const getProducts = async (filter = {}, lang = 'fr') => {
             limit   : 9999
         }
     };
-    
+    const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     try {
-        const response = await axios.post('v2/products', postBody);
+        const response = await axios.post(`v2/products${withFilters ? '/true' : ''}`, _postBody);
         return response.data;
     } catch(e) {
-        console.error('product.getProductsFromCategory');
+        console.error('product.getProducts');
         return { datas: [], count: 0 };
     }
 };
