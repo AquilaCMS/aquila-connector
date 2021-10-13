@@ -2,14 +2,15 @@ const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
 // GET orders
-const getOrders = async (lang = 'fr') => {
+const getOrders = async (lang = 'fr', postBody = {}) => {
     try {
-        const PostBody = { sort: { createdAt: -1 }, limit: 100, populate: ['items.id'] };
-        const response = await axios.post('v2/orders', {
+        const _defaultPostBody = {
             lang,
-            PostBody
-        });
-        return response.data.datas;
+            PostBody: { sort: { createdAt: -1 }, limit: 100 }
+        };
+        const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
+        const response = await axios.post('v2/orders', _postBody);
+        return response.data;
     } catch (err) {
         throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
