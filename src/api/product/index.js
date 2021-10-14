@@ -8,7 +8,6 @@ const getProduct = async (postBody, preview = undefined, lang = 'fr') => {
         withFilters: false,
         PostBody   : {
             structure: {
-                allergens      : 1,
                 code           : 1,
                 attributes     : 1,
                 canonical      : 1,
@@ -17,7 +16,6 @@ const getProduct = async (postBody, preview = undefined, lang = 'fr') => {
                 stock          : 1
             },
             populate: [
-                'allergens',
                 'associated_prds',
                 'bundle_sections.products.id'
             ],

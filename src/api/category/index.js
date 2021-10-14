@@ -31,7 +31,7 @@ const getCategory = async (lang = 'fr', postBody = {}) => {
 const getCategoryProducts = async (slug = '', id = '', lang = 'fr', postBody = {}) => {
     // Only the slug ? Need to get the id !
     if (slug) {
-        const postBodyReq1 = { PostBody: { filter: { 'translation.fr.slug': slug }, limit: 10, page: 1, structure: { translation: 1 } } };
+        const postBodyReq1 = { PostBody: { filter: { [`translation.${lang}.slug`]: slug }, limit: 10, page: 1, structure: { translation: 1 } } };
         const category     = await getCategory(lang, postBodyReq1);
         id                 = category._id;
     }
