@@ -1,8 +1,8 @@
 const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
-const getProduct = async (type, value, preview = undefined, lang = 'fr') => {
-    const postBody = {
+const getProduct = async (postBody, preview = undefined, lang = 'fr') => {
+    const _defaultPostBody = {
         lang,
         countviews : true,
         withFilters: false,
@@ -24,14 +24,9 @@ const getProduct = async (type, value, preview = undefined, lang = 'fr') => {
             limit: 1
         }
     };
-    if (type === 'slug') {
-        postBody.PostBody.filter = { [`translation.${lang}.slug`]: value };
-    } else {
-        postBody.PostBody.filter = { code: value };
-    }
-
+    const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     try {
-        const response = await axios.post(`v2/product${preview ? `?preview=${preview}` : ''}`, postBody);
+        const response = await axios.post(`v2/product${preview ? `?preview=${preview}` : ''}`, _postBody);
         return response.data;
     } catch(e) {
         console.error('product.getProduct');
