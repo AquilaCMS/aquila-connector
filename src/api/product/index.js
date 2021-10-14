@@ -13,14 +13,15 @@ const getProduct = async (type, value, preview = undefined, lang = 'fr') => {
                 attributes     : 1,
                 canonical      : 1,
                 associated_prds: 1,
-                bundle_sections: 1
+                bundle_sections: 1,
+                stock          : 1
             },
             populate: [
                 'allergens',
                 'associated_prds',
                 'bundle_sections.products.id'
             ],
-            limite: 1
+            limit: 1
         }
     };
     if (type === 'slug') {
