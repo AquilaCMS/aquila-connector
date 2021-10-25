@@ -1,7 +1,7 @@
 const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
-const getProduct = async (postBody, preview = undefined, lang = 'fr') => {
+const getProduct = async (postBody = {}, preview = undefined, lang = 'fr') => {
     const _defaultPostBody = {
         lang,
         countviews : true,
@@ -63,7 +63,7 @@ const getProductById = async (id, lang = 'fr') => {
     // Non-explicite "return null" needed
 };
 
-const getProducts = async (withFilters, postBody = {}, lang = 'fr') => {
+const getProducts = async (withFilters = false, postBody = {}, lang = 'fr') => {
     const _defaultPostBody = {
         lang,
         PostBody: {
