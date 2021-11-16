@@ -1,7 +1,7 @@
 function getImage(image, size) {
     size = size || '256x256';
     if (image) {
-        return `/images/products/${size}/${image._id}/${image.name}`;
+        return {url: `/images/products/${size}/${image._id}/${image.name}`, alt: image.alt};
     }
     return '';
 }
@@ -13,7 +13,7 @@ function getMainImage(images, size) {
         if(!image) { // No default ?
             image = images[0]; // Take first image
         }
-        return `/images/products/${size}/${image._id}/${image.name}`;
+        return {url: `/images/products/${size}/${image._id}/${image.name}`, alt: image.alt};
     }
     return '';
 }
