@@ -1,16 +1,20 @@
 const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
-const getUser = async (userId) => {
-    try {
-        const response = await axios.post(`v2/user/${userId}`, { PostBody: {
+const getUser = async (userId, postBody = {}) => {
+    const _defaultPostBody = {
+        PostBody: {
             structure: {
                 addresses       : 1,
                 billing_address : 1,
                 delivery_address: 1,
                 phone_mobile    : 1
             }
-        } });
+        }
+    };
+    const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
+    try {
+        const response = await axios.post(`v2/user/${userId}`, _postBody);
         return response.data;
     } catch(err) {
         throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
