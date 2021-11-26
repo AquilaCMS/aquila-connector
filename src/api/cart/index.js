@@ -15,7 +15,7 @@ const getCart = async (cartId, lang = 'fr') => {
     try {
         const response = await axios.post(`v2/cart/${cartId}`, postBody);
         return response.data;
-    } catch(err) {
+    } catch (err) {
         throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
     }
 };
@@ -74,6 +74,40 @@ const setCartAddresses = async (cartId, addresses) => {
     }
 };
 
+// GET shipments
+const getShipmentCart = async (cart, withCountry = null, PostBody = {}, lang = 'fr') => {
+    const _defaultPostBody = {
+        limit   : 9999
+    };
+    const _PostBody = utils.deepMergeObjects(_defaultPostBody, PostBody);
+    try {
+        const response = await axios.post('v2/shipments/filter', {
+            lang,
+            PostBody: _PostBody,
+            cart,
+            withCountry
+        });
+        return response.data;
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+    }
+};
+
+// GET shipments
+const setCartShipment = async (cartId, shipment, isoCountryCode, deleteCartDelivery = false, lang = 'fr') => {
+    try {
+        const response = await axios.put(`v2/cart/delivery${deleteCartDelivery ? '?removeDeliveryDatas=true' : ''}`, {
+            cartId,
+            shipment,
+            isoCountryCode,
+            lang
+        });
+        return response.data;
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+    }
+};
+
 // Transforms a cart into an order
 const cartToOrder = async (cartId, lang = 'fr') => {
     try {
@@ -93,5 +127,7 @@ module.exports = {
     deleteItem,
     updateQtyItem,
     setCartAddresses,
+    getShipmentCart,
+    setCartShipment,
     cartToOrder
 }
