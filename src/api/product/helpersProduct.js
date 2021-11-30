@@ -36,7 +36,7 @@ function generateSlug({ slug , categorySlugs, canonical }) {
     } else if (canonical) {
         return canonical;
     }
-    return false;
+    return '/';
 }
 
 module.exports = {
