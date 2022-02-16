@@ -1,3 +1,4 @@
+const cookie = require('cookie');
 const axios = require('./AxiosInstance');
 
 // Merge of 2 objects
