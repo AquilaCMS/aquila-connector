@@ -1,4 +1,4 @@
-const axios = require('../../lib/AxiosInstance');
+const axios = require('./AxiosInstance');
 
 // Merge of 2 objects
 const deepMergeObjects = (target, source) => {
