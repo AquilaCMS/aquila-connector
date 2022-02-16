@@ -28,17 +28,4 @@ instance.interceptors.request.use(function (config) {
     return config;
 });
 
-// Set token 
-const setTokenAxios = (cookies) => {
-    const jwt = cookie.parse(cookies).jwt;
-    if (jwt) {
-        axios.defaults.headers.common['Authorization'] = jwt;
-    } else {
-        delete axios.defaults.headers.common['Authorization'];
-    }
-};
-
-module.exports = {
-    instance,
-    setTokenAxios
-}
+module.exports = instance;
