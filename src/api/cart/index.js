@@ -2,8 +2,8 @@ const axios = require('../../lib/AxiosInstance');
 const utils = require('../../lib/utils');
 
 // GET cart from ID
-const getCart = async (cartId, lang = 'fr') => {
-    const postBody = {
+const getCart = async (cartId, postBody = {}, lang = 'fr') => {
+    const _defaultPostBody = {
         lang,
         PostBody: {
             structure: {
@@ -12,8 +12,9 @@ const getCart = async (cartId, lang = 'fr') => {
             }
         }
     };
+    const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     try {
-        const response = await axios.post(`v2/cart/${cartId}`, postBody);
+        const response = await axios.post(`v2/cart/${cartId}`, _postBody);
         return response.data;
     } catch (err) {
         throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
@@ -21,7 +22,7 @@ const getCart = async (cartId, lang = 'fr') => {
 };
 
 // Add a product to cart
-const addToCart = async (cartId, product, qty, selections = undefined) => {
+const addToCart = async (cartId, product, qty, selections = undefined, params = {}) => {
     try {
         const response = await axios.put('v2/cart/item', {
             cartId,
@@ -30,7 +31,8 @@ const addToCart = async (cartId, product, qty, selections = undefined) => {
                 quantity: qty,
                 weight  : product.weight,
                 selections
-            }
+            },
+            ...params
         });
         return response.data;
     } catch(err) {
