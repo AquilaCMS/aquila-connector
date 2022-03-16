@@ -2,9 +2,9 @@
 Library for call aquilacms
 
 ## Installation
-```npm install aquila-connector```
+```npm install @aquilacms/aquila-connector```
 OR
-```yarn add aquila-connector```
+```yarn add @aquilacms/aquila-connector```
 
 - Github : https://github.com/AquilaCMS/aquila-connector
 - Doc : https://github.com/AquilaCMS/aquila-connector/wiki
