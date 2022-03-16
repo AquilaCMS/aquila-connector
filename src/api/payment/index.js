@@ -22,7 +22,7 @@ const getPaymentMethods = async (lang = 'fr') => {
 // Make payment
 const makePayment = async (orderNumber, paymentCode, returnURL, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/order/pay/${orderNumber}/${lang}`, {
+        const response = await axios.post(`v2/payment/order/${orderNumber}/${lang}`, {
             paymentMethod: paymentCode,
             returnURL
         });
