@@ -35,6 +35,8 @@ function generateSlug({ slug , categorySlugs, canonical }) {
         return `/${categorySlugs.join('/')}/${slug}`;
     } else if (canonical) {
         return canonical;
+    } else if (slug) {
+        return `/na/${slug}`;
     }
     return '/';
 }

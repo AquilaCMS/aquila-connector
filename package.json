@@ -1,6 +1,6 @@
 {
   "name": "@aquilacms/aquila-connector",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "Connector to Aquila",
   "main": "index.js",
   "exports": {
