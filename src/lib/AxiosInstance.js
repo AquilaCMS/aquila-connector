@@ -1,6 +1,10 @@
 const axios = require('axios');
 const cookie = require('cookie');
 
+if (!process.env.NEXT_PUBLIC_API_URL) {
+    throw new Error('AQUILA CONNECTOR : Missing environment variable NEXT_PUBLIC_API_URL');
+}
+
 const options = {
     // .. where we make our configurations
     baseURL: process.env.NEXT_PUBLIC_API_URL,

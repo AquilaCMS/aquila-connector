@@ -4,8 +4,8 @@ const getBlockCMS = async (code, lang = 'fr') => {
     try {
         const response = await axios.post(`v2/component/ns-cms/${code}`, { lang });
         return response.data;
-    } catch(e) {
-        console.error('Blockcms.getBlockCMS');
+    } catch(err) {
+        console.error(`Blockcms.getBlockCMS [${code}] [${lang}]`);
         return {};
     }
 };
@@ -33,7 +33,7 @@ const getBlocksCMS = async (codes, lang = 'fr', postBody = {}) => {
     try {
         const response = await axios.post('v2/cmsBlocks', body);
         return response.data?.datas; // TODO Si y'en a pas ?
-    } catch(e) {
+    } catch(err) {
         console.error('Blockcms.getBlocksCMS');
         return { datas: [], count: 0 };
     }
