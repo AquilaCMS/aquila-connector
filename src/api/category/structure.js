@@ -22,10 +22,7 @@ const defaultPostBody = (type, lang) => {
                 },
                 populate: ['bundle_sections.products.id'],
                 limit   : 9999,
-                page    : 1,
-                sort    : {
-                    sortWeight: -1
-                }
+                page    : 1
             }
         };
     default:
