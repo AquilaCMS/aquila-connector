@@ -63,6 +63,26 @@ const updateQtyItem = async (cartId, itemId, quantity) => {
     }
 };
 
+// Add discount to cart
+const addDiscount = async (cartId, discount) => {
+    try {
+        const res = await axios.get(`v2/promo/check/code/${discount}/${cartId}`);
+        return res.data;
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+    }
+};
+
+// Delete discount from cart
+const deleteDiscount = async (cartId) => {
+    try {
+        const res = await axios.delete(`v2/cart/discount/${cartId}`);
+        return res.data;
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+    }
+};
+
 // Set cart addresses
 const setCartAddresses = async (cartId, addresses) => {
     try {
@@ -128,6 +148,8 @@ module.exports = {
     addToCart,
     deleteItem,
     updateQtyItem,
+    addDiscount,
+    deleteDiscount,
     setCartAddresses,
     getShipmentCart,
     setCartShipment,
