@@ -87,8 +87,22 @@ const getProducts = async (withFilters = false, postBody = {}, lang = 'fr') => {
     }
 };
 
+const downloadFreeVirtualProduct = async (productId) => axios({
+    url          : `v2/product/download?p_id=${productId}`,
+    method       : 'GET',
+    responseType : 'blob',
+});
+
+const downloadVirtualProduct = async (itemId) => axios({
+    url          : `v2/product/download?op_id=${itemId}`,
+    method       : 'GET',
+    responseType : 'blob',
+});
+
 module.exports = {
     getProduct,
     getProductById,
-    getProducts
+    getProducts,
+    downloadFreeVirtualProduct,
+    downloadVirtualProduct
 }
