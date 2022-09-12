@@ -27,6 +27,18 @@ const setTokenAxios = (cookies) => {
     }
 };
 
+// Generate URL image cache
+const generateURLImageCache = (type, size = '256x256', id, fileName, extension) => {
+    if (!extension) {
+        extension = '.png';
+    }
+    const matches = extension.match(/\/?([^/]*)\.(.*)$/);
+    if (matches && matches[1] && matches[2]) {
+        extension = `.${matches[2]}`;
+    }
+    return `/images/${type}/${size}/${id}/${fileName}${extension}`;
+};
+
 class ConnectorError extends Error {
     constructor(code, message = '') {
         super(message);
@@ -39,5 +51,6 @@ module.exports = {
     deepMergeObjects,
     simplifyPath,
     setTokenAxios,
+    generateURLImageCache,
     ConnectorError
 }
