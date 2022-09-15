@@ -17,6 +17,18 @@ const simplifyPath = (path) => {
     return path.split('?')[0].split('/');
 };
 
+// String to slug
+const slugify = (string) => {
+    return string
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, ''); // Trim - from end of text
+};
+
 // Set token 
 const setTokenAxios = (cookies) => {
     const jwt = cookie.parse(cookies).jwt;
@@ -36,7 +48,7 @@ const generateURLImageCache = (type, size = '256x256', id, fileName, extension) 
     if (matches && matches[1] && matches[2]) {
         extension = `.${matches[2]}`;
     }
-    return `/images/${type}/${size}/${id}/${fileName}${extension}`;
+    return `/images/${type}/${size}/${id}/${slugify(fileName)}${extension}`;
 };
 
 class ConnectorError extends Error {
@@ -50,6 +62,7 @@ class ConnectorError extends Error {
 module.exports = {
     deepMergeObjects,
     simplifyPath,
+    slugify,
     setTokenAxios,
     generateURLImageCache,
     ConnectorError
