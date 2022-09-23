@@ -30,7 +30,8 @@ const addToCart = async (cartId, product, qty, selections = undefined, params = 
                 id      : product._id,
                 quantity: qty,
                 weight  : product.weight,
-                selections
+                selections,
+                selected_variant: product.selected_variant
             },
             ...params
         });
