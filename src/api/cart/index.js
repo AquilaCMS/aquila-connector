@@ -97,7 +97,7 @@ const setCartAddresses = async (cartId, addresses) => {
     }
 };
 
-// GET shipments
+// Get shipment methods from cart
 const getShipmentCart = async (cart, withCountry = null, PostBody = {}, lang = 'fr') => {
     const _defaultPostBody = {
         limit   : 9999
@@ -116,14 +116,26 @@ const getShipmentCart = async (cart, withCountry = null, PostBody = {}, lang = '
     }
 };
 
-// GET shipments
-const setCartShipment = async (cartId, shipment, isoCountryCode, deleteCartDelivery = false, lang = 'fr') => {
+// Set selected shipment method in cart
+const setCartShipment = async (cartId, shipment, isoCountryCode, lang = 'fr') => {
     try {
-        const response = await axios.put(`v2/cart/delivery${deleteCartDelivery ? '?removeDeliveryDatas=true' : ''}`, {
+        const response = await axios.put('v2/cart/delivery', {
             cartId,
             shipment,
             isoCountryCode,
             lang
+        });
+        return response.data;
+    } catch (err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+    }
+};
+
+// Delete shipment method from cart
+const deleteCartShipment = async (cartId) => {
+    try {
+        const response = await axios.put('v2/cart/delivery?removeDeliveryDatas=true', {
+            cartId
         });
         return response.data;
     } catch (err) {
@@ -154,5 +166,6 @@ module.exports = {
     setCartAddresses,
     getShipmentCart,
     setCartShipment,
+    deleteCartShipment,
     cartToOrder
 }
