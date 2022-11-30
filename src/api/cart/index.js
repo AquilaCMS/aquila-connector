@@ -9,8 +9,7 @@ const getCart = async (cartId, postBody = {}, lang = 'fr') => {
             structure: {
                 addresses    : 1,
                 point_of_sale: 1
-            },
-            populate: ['items.id']
+            }
         }
     };
     const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
