@@ -2,7 +2,7 @@ const utils = require('../../lib/utils');
 
 function getImage(image, size, variant = false) {
     size = size || '256x256';
-    if (image) {
+    if (image?._id) {
         return {url: `/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${utils.slugify(image.title)}${image.extension}`, alt: image.alt};
     }
     return '';
