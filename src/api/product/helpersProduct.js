@@ -1,9 +1,9 @@
-const utils = require('../../lib/utils');
+const { slugify } = require('aql-utils/theme');
 
 function getImage(image, size, variant = false) {
     size = size || '256x256';
     if (image?._id) {
-        return {url: `/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${utils.slugify(image.title)}${image.extension}`, alt: image.alt};
+        return {url: `/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${slugify(image.title)}${image.extension}`, alt: image.alt};
     }
     return '';
 }
@@ -15,7 +15,7 @@ function getMainImage(images, size, variant = false) {
         if(!image) { // No default ?
             image = images[0]; // Take first image
         }
-        return {url: `/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${utils.slugify(image.title)}${image.extension}`, alt: image.alt};
+        return {url: `/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${slugify(image.title)}${image.extension}`, alt: image.alt};
     }
     return '';
 }
@@ -26,7 +26,7 @@ function getTabImageURL(images, variant = false) {
 
     for (let index = 0; index < images?.length; index++) {
         const image = images[index];
-        imagesTab.push(`/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${utils.slugify(image.title)}${image.extension}`);
+        imagesTab.push(`/images/products${variant ? 'Variant' : ''}/${size}/${image._id}/${slugify(image.title)}${image.extension}`);
     }
 
     return imagesTab;

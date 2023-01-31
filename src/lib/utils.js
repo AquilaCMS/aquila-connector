@@ -1,5 +1,6 @@
 const cookie = require('cookie');
 const axios = require('./AxiosInstance');
+const { slugify } = require('aql-utils/theme');
 
 // Merge of 2 objects
 const deepMergeObjects = (target, source) => {
@@ -15,18 +16,6 @@ const deepMergeObjects = (target, source) => {
 
 const simplifyPath = (path) => {
     return path.split('?')[0].split('/');
-};
-
-// String to slug
-const slugify = (string) => {
-    return string
-        .toString()
-        .toLowerCase()
-        .replace(/\s+/g, '-') // Replace spaces with -
-        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-        .replace(/\-\-+/g, '-') // Replace multiple - with single -
-        .replace(/^-+/, '') // Trim - from start of text
-        .replace(/-+$/, ''); // Trim - from end of text
 };
 
 // Set token 
