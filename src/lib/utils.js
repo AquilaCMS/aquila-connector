@@ -30,14 +30,13 @@ const setTokenAxios = (cookies) => {
 
 // Generate URL image cache
 const generateURLImageCache = (type, size = '256x256', id, fileName, extension) => {
-    if (!extension) {
-        extension = '.png';
-    }
+    fileName = fileName || 'no-name';
+    extension = extension || '.png';
     const matches = extension.match(/\/?([^/]*)\.(.*)$/);
     if (matches && matches[1] && matches[2]) {
         extension = `.${matches[2]}`;
     }
-    return `/images/${type}/${size}/${id}/${slugify(fileName)}${extension}`;
+    return `/images/${type}/${size}/${id}/${slugify(fileName.toString())}${extension}`;
 };
 
 class ConnectorError extends Error {
