@@ -12,7 +12,7 @@ const getOrders = async (lang = 'fr', postBody = {}) => {
         const response = await axios.post('v2/orders', _postBody);
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -25,7 +25,7 @@ const getOrderById = async (orderId, lang = 'fr') => {
         });
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -59,7 +59,7 @@ const askCancelOrder = async (orderId) => {
         const res = await axios.put(`v2/order/requestCancel/${orderId}`);
         return res.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 

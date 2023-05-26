@@ -13,7 +13,7 @@ const getTerritories = async (postBody = {}) => {
         const response = await axios.post('v2/territories', _postBody);
         return response.data;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 

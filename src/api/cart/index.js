@@ -17,7 +17,7 @@ const getCart = async (cartId, postBody = {}, lang = 'fr') => {
         const response = await axios.post(`v2/cart/${cartId}`, _postBody);
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -37,7 +37,7 @@ const addToCart = async (cartId, product, qty, selections = undefined, params = 
         });
         return response.data;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -47,7 +47,7 @@ const deleteItem = async (cartId, itemId) => {
         const res = await axios.delete(`v2/cart/${cartId}/item/${itemId}`);
         return res.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -60,7 +60,7 @@ const updateQtyItem = async (cartId, itemId, quantity) => {
         });
         return res.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -70,7 +70,7 @@ const addDiscount = async (cartId, discount) => {
         const res = await axios.get(`v2/promo/check/code/${discount}/${cartId}`);
         return res.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -80,7 +80,7 @@ const deleteDiscount = async (cartId) => {
         const res = await axios.delete(`v2/cart/discount/${cartId}`);
         return res.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -93,7 +93,7 @@ const setCartAddresses = async (cartId, addresses) => {
         });
         return res.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -112,7 +112,7 @@ const getShipmentCart = async (cart, withCountry = null, PostBody = {}, lang = '
         });
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -127,7 +127,7 @@ const setCartShipment = async (cartId, shipment, isoCountryCode, lang = 'fr') =>
         });
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -139,7 +139,7 @@ const deleteCartShipment = async (cartId) => {
         });
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -152,7 +152,7 @@ const cartToOrder = async (cartId, lang = 'fr') => {
         });
         return res.data.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 

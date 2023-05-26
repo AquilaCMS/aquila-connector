@@ -15,7 +15,7 @@ const getPaymentMethods = async (lang = 'fr') => {
         });
         return response.data.datas;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -28,7 +28,7 @@ const makePayment = async (orderNumber, paymentCode, returnURL, lang = 'fr') => 
         });
         return response.data;
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 

@@ -10,7 +10,7 @@ const getBlogList = async (PostBody = {}, lang = 'fr') => {
         });
         return response.data.datas;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -23,7 +23,7 @@ const getBlogArticle = async (PostBody = {}, preview = undefined, lang = 'fr') =
         });
         return response.data;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 

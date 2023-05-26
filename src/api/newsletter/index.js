@@ -6,7 +6,7 @@ const getNewsletter = async (email) => {
         const response = await axios.get(`v2/newsletter/${email}`);
         return response.data;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 
@@ -20,7 +20,7 @@ const setNewsletter = async (email, name = 'DefaultNewsletter', optin) => {
         const response = await axios.post(`v2/newsletter/${email}`, postBody);
         return response.data;
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message);
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
 };
 

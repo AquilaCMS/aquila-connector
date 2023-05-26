@@ -40,10 +40,11 @@ const generateURLImageCache = (type, size = '256x256', id, fileName, extension) 
 };
 
 class ConnectorError extends Error {
-    constructor(code, message = '') {
+    constructor(code, message = '', messageCode = '') {
         super(message);
         this.name = 'ConnectorError';
         this.code = code;
+        this.messageCode = messageCode;
     }
 }
 
