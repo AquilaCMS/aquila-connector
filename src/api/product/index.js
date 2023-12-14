@@ -99,10 +99,23 @@ const downloadVirtualProduct = async (itemId) => axios({
     responseType : 'blob',
 });
 
+const setProductReview = async (productId, review, lang) => {
+    try {
+        const response = await axios.put(`v2/product/${productId}/review`, {
+            ...review,
+            lang
+        });
+        return response.data;
+    } catch(err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+    }
+};
+
 module.exports = {
     getProduct,
     getProductById,
     getProducts,
     downloadFreeVirtualProduct,
-    downloadVirtualProduct
+    downloadVirtualProduct,
+    setProductReview
 }
