@@ -117,12 +117,12 @@ const getShipmentCart = async (cart, withCountry = null, PostBody = {}, lang = '
 };
 
 // Set selected shipment method in cart
-const setCartShipment = async (cartId, shipment, isoCountryCode, lang = 'fr') => {
+const setCartShipment = async (cartId, shipment, deliveryAddress, lang = 'fr') => {
     try {
         const response = await axios.put('v2/cart/delivery', {
             cartId,
             shipment,
-            isoCountryCode,
+            deliveryAddress,
             lang
         });
         return response.data;
