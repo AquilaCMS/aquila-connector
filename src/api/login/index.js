@@ -10,6 +10,15 @@ const auth = async (username, password) => {
     }
 };
 
+const isAuth = async () => {
+    try {
+        const response = await axios.get('v2/auth/isauthenticated');
+        return response.data;
+    } catch(err) {
+        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+    }
+};
+
 const sendMailResetPassword = async (email, lang = 'fr') => {
     try {
         const response = await axios.post(`v2/user/resetpassword/${lang}`, { email });
@@ -29,6 +38,7 @@ const logout = async () => {
 
 module.exports = {
     auth,
+    isAuth,
     sendMailResetPassword,
     logout
 }
