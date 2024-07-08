@@ -8,7 +8,7 @@ const getBlogList = async (PostBody = {}, lang = 'fr') => {
             lang,
             PostBody
         });
-        return response.data.datas;
+        return response.data;
     } catch(err) {
         throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
     }
