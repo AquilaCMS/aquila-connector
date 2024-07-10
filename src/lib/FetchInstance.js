@@ -14,26 +14,28 @@ class FetchInstance {
     async request(endpoint, options = {}, responseType = 'json') {
         const url = `${this.baseUrl}/${endpoint}`;
         
-        // Retrieve the JWT token from the cookies
-        const token = cookie.parse(document.cookie).jwt;
-
-        // Retreive the lang from the cookies
-        const lang = cookie.parse(document.cookie).lang;
-        
         // Set up headers
         const headers = {
             'Content-Type': 'application/json',
             ...options.headers,
         };
-    
-        // If token exists, add it to the headers
-        if (token) {
-            headers['Authorization'] = token;
-        }
 
-        // If lang exists, add it to the headers
-        if (lang) {
-            headers['lang'] = lang;
+        if (typeof window !== 'undefined') {
+            // Retrieve the JWT token from the cookies
+            const token = cookie.parse(document.cookie).jwt;
+
+            // Retreive the lang from the cookies
+            const lang = cookie.parse(document.cookie).lang;
+
+            // If token exists, add it to the headers
+            if (token) {
+                headers['Authorization'] = token;
+            }
+
+            // If lang exists, add it to the headers
+            if (lang) {
+                headers['lang'] = lang;
+            }
         }
     
         // Merge custom headers with options
