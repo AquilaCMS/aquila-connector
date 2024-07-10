@@ -1,5 +1,5 @@
 const cookie = require('cookie');
-const utils = require('../../lib/utils');
+const utils = require('./utils');
 
 class FetchInstance {
     constructor() {
