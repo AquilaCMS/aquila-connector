@@ -1,5 +1,5 @@
 const cookie = require('cookie');
-const axios = require('./AxiosInstance');
+const customFetch = require('./FetchInstance');
 const { slugify } = require('aql-utils/theme');
 
 // Merge of 2 objects

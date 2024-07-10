@@ -1,4 +1,4 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 const utils = require('../../lib/utils');
 
 // GET orders
@@ -9,57 +9,43 @@ const getOrders = async (lang = 'fr', postBody = {}) => {
             PostBody: { sort: { createdAt: -1 }, limit: 100 }
         };
         const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
-        const response = await axios.post('v2/orders', _postBody);
-        return response.data;
+        return await customFetch.post('v2/orders', _postBody);
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
 // GET order by ID
 const getOrderById = async (orderId, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/order/${orderId}`, {
-            lang,
-            PostBody: {}
-        });
-        return response.data;
+        return await customFetch.post(`v2/order/${orderId}`, { lang, PostBody: {} });
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
 // GET order bill
 const downloadbillOrder = async (billId) => {
     try {
-        return axios({
-            url         : 'v2/bills/generatePDF/',
-            method      : 'POST',
-            responseType: 'blob',
-            data        : {
-                PostBody: {
-                    filter: { _id: billId }
-                }
-            }
-        });
+        return await customFetch.post(`v2/bills/generatePDF/`, { PostBody: { filter: { _id: billId } } }, {}, 'blob');
     } catch (err) {
-        const b   = new Blob([err.response.data]);
+        /*const b   = new Blob([err.response.data]);
         const fr  = new FileReader();
         fr.onload = function () {
             const result = JSON.parse(this.result);
             throw new utils.ConnectorError(result.status, result.message);
         };
-        fr.readAsText(b);
+        fr.readAsText(b);*/
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
 // Ask cancel order
 const askCancelOrder = async (orderId) => {
     try {
-        const res = await axios.put(`v2/order/requestCancel/${orderId}`);
-        return res.data;
+        return await customFetch.put(`v2/order/requestCancel/${orderId}`);
     } catch (err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 

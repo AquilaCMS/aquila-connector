@@ -1,9 +1,8 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 
 const getBlockCMS = async (code, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/component/ns-cms/${code}`, { lang });
-        return response.data;
+        return await customFetch.post(`v2/component/ns-cms/${code}`, { lang });
     } catch(err) {
         console.error(`Blockcms.getBlockCMS [${code}] [${lang}]`);
         return {};
@@ -11,7 +10,6 @@ const getBlockCMS = async (code, lang = 'fr') => {
 };
 
 const getBlocksCMS = async (codes, lang = 'fr', postBody = {}) => {
-
     let body = {};
 
     if (codes.length > 0) {
@@ -31,8 +29,7 @@ const getBlocksCMS = async (codes, lang = 'fr', postBody = {}) => {
     }
 
     try {
-        const response = await axios.post('v2/cmsBlocks', body);
-        return response.data?.datas; // TODO Si y'en a pas ?
+        return await customFetch.post('v2/cmsBlocks', body);
     } catch(err) {
         console.error('Blockcms.getBlocksCMS');
         return { datas: [], count: 0 };

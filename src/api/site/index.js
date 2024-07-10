@@ -1,18 +1,12 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 
 const getSiteInfo = async (lang = 'fr') => {
     try {
-        const response    = await axios.post('v2/themeConfig', { lang, PostBody: {} });
-        const themeConfig = response.data;
-
-        const response2 = await axios.post('v2/config', { PostBody: { structure: { 'environment.siteName': 1, 'environment.displayingReviews': 1 } } });
-        const config    = response2.data;
-
-        const response3 = await axios.post('v2/languages', { PostBody: { limit: 99 } });
-        const langs     = response3.data.datas;
-
+        const themeConfig = await customFetch.post('v2/themeConfig', { lang, PostBody: {} });
+        const config = await customFetch.post('v2/config', { PostBody: { structure: { 'environment.siteName': 1, 'environment.displayingReviews': 1 } } });
+        const langs = await customFetch.post('v2/languages', { PostBody: { limit: 99 } });
         return { themeConfig: { ...themeConfig.config }, ...config, langs };
-    } catch(e) {
+    } catch(err) {
         return { datas: {} };
     }
 };

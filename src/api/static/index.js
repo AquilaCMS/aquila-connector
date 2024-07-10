@@ -1,4 +1,4 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 
 const getPageStatic = async (slug, preview = undefined, lang = 'fr') => {
     const postBody = {
@@ -11,8 +11,7 @@ const getPageStatic = async (slug, preview = undefined, lang = 'fr') => {
         }
     };
     try {
-        const response = await axios.post(`v2/static${preview ? `?preview=${preview}` : ''}`, postBody);
-        return response.data;
+        return await customFetch.post(`v2/static${preview ? `?preview=${preview}` : ''}`, postBody);
     } catch (err) {
         console.error('Error StaticProvider getPageStatic => ', err);
         return null;
@@ -21,8 +20,7 @@ const getPageStatic = async (slug, preview = undefined, lang = 'fr') => {
 
 const getStatics = async (PostBody = { filter: {}, limit: 10, structure: { content: 1 } }) => {
     try {
-        const response = await axios.post('v2/statics', { PostBody });
-        return response.data;
+        return await customFetch.post('v2/statics', { PostBody });
     } catch (err) {
         console.error('Error StaticProvider getStatics => ', err);
         return { datas: [], count: 0 };

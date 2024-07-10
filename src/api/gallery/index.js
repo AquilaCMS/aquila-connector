@@ -1,13 +1,12 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 const utils = require('../../lib/utils');
 
 // GET items gallery
 const getItemsGallery = async (code) => {
     try {
-        const response = await axios.get(`v2/gallery/${code}/items`);
-        return response.data;
+        return await customFetch.get(`v2/gallery/${code}/items`);
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 

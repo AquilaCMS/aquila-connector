@@ -1,13 +1,12 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 const utils = require('../../lib/utils');
 
 // GET component data
 const getComponent = async (tag, nsCode, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/component/${tag}/${nsCode}`, { lang });
-        return response.data;
+        return await customFetch.post(`v2/component/${tag}/${nsCode}`, { lang });
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 

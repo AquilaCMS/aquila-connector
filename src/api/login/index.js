@@ -1,38 +1,35 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 const utils = require('../../lib/utils');
 
 const auth = async (username, password) => {
     try {
-        const response = await axios.post('v2/auth/login/', { username, password });
-        return response.data;
+        return await customFetch.post('v2/auth/login/', { username, password });
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
 const isAuth = async () => {
     try {
-        const response = await axios.get('v2/auth/isauthenticated');
-        return response.data;
+        return await customFetch.get('v2/auth/isauthenticated');
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
 const sendMailResetPassword = async (email, lang = 'fr') => {
     try {
-        const response = await axios.post(`v2/user/resetpassword/${lang}`, { email });
-        return response.data;
+        return await customFetch.post(`v2/user/resetpassword/${lang}`, { email });
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
 const logout = async () => {
     try {
-        await axios.get(`v2/auth/logout`);
+        return await customFetch.get(`v2/auth/logout`);
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 

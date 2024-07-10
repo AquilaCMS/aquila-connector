@@ -1,4 +1,4 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 const structure = require('./structure');
 const utils = require('../../lib/utils');
 
@@ -9,8 +9,7 @@ const getCategories = async (lang = 'fr', postBody = {}) => {
         // Merge default Postbody and the requested postbody
         const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
         // Call api with the good Postbody
-        const response = await axios.post('v2/categories', _postBody);
-        return response.data;
+        return await customFetch.post('v2/categories', _postBody);
     } catch (err) {
         console.error('Error CategoryProvider getCategories => ', err);
         return { datas: [], count: 0 };
@@ -24,8 +23,7 @@ const getCategory = async (lang = 'fr', postBody = {}) => {
     // Merge default Postbody and the requested postbody
     const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
     // Call api with the good Postbody
-    const response = await axios.post('v2/category', _postBody);
-    return response.data;
+    return await customFetch.post('v2/category', _postBody);
 };
 
 const getCategoryProducts = async (slug = '', id = '', lang = 'fr', postBody = {}) => {
@@ -43,8 +41,7 @@ const getCategoryProducts = async (slug = '', id = '', lang = 'fr', postBody = {
             // Merge default Postbody and the requested postbody
             const _postBody = utils.deepMergeObjects(_defaultPostBody, postBody);
             // Call api with the good Postbody
-            const response = await axios.post(`v2/products/category/${id}`, _postBody);
-            return response.data;
+            return await customFetch.post(`v2/products/category/${id}`, _postBody);
         } catch (err) {
             console.error('Error CategoryProvider getCategoryProducts => ', err);
             return { datas: [], count: 0 };

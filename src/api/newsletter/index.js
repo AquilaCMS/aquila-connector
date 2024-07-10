@@ -1,12 +1,11 @@
-const axios = require('../../lib/AxiosInstance');
+const customFetch = require('../../lib/FetchInstance');
 const utils = require('../../lib/utils');
 
 const getNewsletter = async (email) => {
     try {
-        const response = await axios.get(`v2/newsletter/${email}`);
-        return response.data;
+        return await customFetch.get(`v2/newsletter/${email}`);
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
@@ -17,10 +16,9 @@ const setNewsletter = async (email, name = 'DefaultNewsletter', optin) => {
     };
 
     try {
-        const response = await axios.post(`v2/newsletter/${email}`, postBody);
-        return response.data;
+        return await customFetch.post(`v2/newsletter/${email}`, postBody);
     } catch(err) {
-        throw new utils.ConnectorError(err?.response?.data?.status, err?.response?.data?.message, err?.response?.data?.code);
+        throw new utils.ConnectorError(err?.status, err?.message, err?.code);
     }
 };
 
