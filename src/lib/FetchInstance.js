@@ -3,15 +3,16 @@ const utils = require('./utils');
 
 class FetchInstance {
     constructor() {
-        const baseURL = process.env.NEXT_PUBLIC_API_URL;
+        const baseURL = process.env.API_URL;
         if (!baseURL) {
-            throw new Error('Aquila Connector Error : NEXT_PUBLIC_API_URL is not defined in .env file');
+            throw new Error('[Aquila Connector] error : API_URL is not defined in .env file');
         }
         // Check if the URL ends with a slash
         this.baseUrl = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL;
+        this.token = null;
     }
   
-    async request(endpoint, options = {}, responseType = 'json') {
+    async request(endpoint, options = {}) {
         const url = `${this.baseUrl}/${endpoint}`;
         
         // Set up headers
@@ -24,18 +25,21 @@ class FetchInstance {
             // Retrieve the JWT token from the cookies
             const token = cookie.parse(document.cookie).jwt;
 
-            // Retreive the lang from the cookies
-            const lang = cookie.parse(document.cookie).lang;
+            // Retreive the locale from the cookies
+            const locale = cookie.parse(document.cookie).lang;
 
             // If token exists, add it to the headers
             if (token) {
                 headers['Authorization'] = token;
             }
 
-            // If lang exists, add it to the headers
-            if (lang) {
-                headers['lang'] = lang;
+            // If locale exists, add it to the headers
+            if (locale) {
+                headers['lang'] = locale;
             }
+        } else if (this.token) {
+            // If token exists, add it to the headers
+            headers['Authorization'] = this.token;
         }
     
         // Merge custom headers with options
@@ -47,32 +51,47 @@ class FetchInstance {
         try {
             const response = await fetch(url, fetchOptions);
 
+            // Handle HTTP errors
+            if (!response.ok) {
+                const tempParsedResponse = await response.json();
+                throw new utils.ConnectorError(response.status, tempParsedResponse?.message, tempParsedResponse?.code);
+            }
+
+            // If the response is empty, return null
+            if (response.status === 204) {
+                return null;
+            }
+
             // Handle different response types
+            const contentType = response.headers.get('content-type');
             let parsedResponse;
-            switch(responseType) {
-                case 'json':
+            switch (true) {
+                case contentType.includes('application/json'):
                     parsedResponse = await response.json();
                     break;
-                case 'blob':
-                    parsedResponse = await response.blob();
-                    break;
-                case 'text':
+                case contentType.includes('text/html'):
                     parsedResponse = await response.text();
                     break;
-                case 'arrayBuffer':
+                case contentType.includes('application/blob'):
+                    parsedResponse = await response.blob();
+                    break;
+                case contentType.includes('text/plain'):
+                    parsedResponse = await response.text();
+                    break;
+                case contentType.includes('application/octet-stream'):
                     parsedResponse = await response.arrayBuffer();
                     break;
-                case 'formData':
+                case contentType.includes('multipart/form-data'):
                     parsedResponse = await response.formData();
                     break;
                 default:
-                    throw new Error(`Unsupported response type: ${responseType}`);
+                    throw new Error(`[Aquila Connector] fetch error on "${endpoint}" | Unsupported response type: ${contentType}`);
             }
 
             return parsedResponse;
         } catch (error) {
-            console.error('Fetch error:', error);
-            throw new utils.Error(error);
+            console.error(`[Aquila Connector] fetch error on "${endpoint}" |`, error);
+            throw new utils.ConnectorError(error.code, error?.message, error?.messageCode);
         }
     }
     
