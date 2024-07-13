@@ -9,7 +9,6 @@ class FetchInstance {
         }
         // Check if the URL ends with a slash
         this.baseUrl = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL;
-        this.token = null;
     }
   
     async request(endpoint, options = {}) {
@@ -21,6 +20,7 @@ class FetchInstance {
             ...options.headers,
         };
 
+        // If the code is running in the browser, add the JWT token to the headers
         if (typeof window !== 'undefined') {
             // Retrieve the JWT token from the cookies
             const token = cookie.parse(document.cookie).jwt;
@@ -37,9 +37,6 @@ class FetchInstance {
             if (locale) {
                 headers['lang'] = locale;
             }
-        } else if (this.token) {
-            // If token exists, add it to the headers
-            headers['Authorization'] = this.token;
         }
     
         // Merge custom headers with options

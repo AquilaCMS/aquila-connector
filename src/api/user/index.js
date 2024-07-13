@@ -120,13 +120,6 @@ const dataUserExport = async ({userId}, options = {}) => {
     try {
         return await customFetch.get(`v2/rgpd/export/${userId}`, options);
     } catch(err) {
-        /*const b   = new Blob([err.response.data]);
-        const fr  = new FileReader();
-        fr.onload = function () {
-            const result = JSON.parse(this.result);
-            throw new utils.ConnectorError(result.status, result.message);
-        };
-        fr.readAsText(b);*/
         throw new utils.ConnectorError(err?.code, err?.message, err?.messageCode);
     }
 };
