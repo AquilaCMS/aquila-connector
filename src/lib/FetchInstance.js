@@ -20,6 +20,13 @@ class FetchInstance {
             ...options.headers,
         };
 
+        // Avoid setting 'Content-Type' header for FormData
+        if (options.body instanceof FormData) {
+            delete headers['Content-Type'];
+        } else {
+            options.body = JSON.stringify(options.body);
+        }
+
         // If the code is running in the browser, add the JWT token to the headers
         if (typeof window !== 'undefined') {
             // Retrieve the JWT token from the cookies
@@ -96,19 +103,19 @@ class FetchInstance {
         return this.request(endpoint, { ...options, method: 'GET' });
     }
     
-    post(endpoint, data, options = {}) {
+    post(endpoint, body, options = {}) {
         return this.request(endpoint, {
             ...options,
             method: 'POST',
-            body: JSON.stringify(data)
+            body
         });
     }
     
-    put(endpoint, data, options = {}) {
+    put(endpoint, body, options = {}) {
         return this.request(endpoint, {
             ...options,
             method: 'PUT',
-            body: JSON.stringify(data)
+            body
         });
     }
     

@@ -11,9 +11,9 @@ const utils = require('../../lib/utils');
  * @returns Storing contact data or the string 'ok' if only sending the contact.
  * @throws {ConnectorError} Throws a ConnectorError if the request fails, containing error code, message, and message code.
  */
-const setContact = async ({mode, formdata}, options = {}) => {
+const setContact = async ({mode, formData}, options = {}) => {
     try {
-        return await customFetch.post(`v2/contact/${mode}`, formdata, options);
+        return await customFetch.post(`v2/contact/${mode}`, formData, options);
     } catch(err) {
         throw new utils.ConnectorError(err?.code, err?.message, err?.messageCode);
     }
