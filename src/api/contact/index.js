@@ -13,13 +13,6 @@ const utils = require('../../lib/utils');
  */
 const setContact = async ({mode, formdata}, options = {}) => {
     try {
-        if (!options.headers) {
-            options.headers = {};
-        }
-        options.headers = {
-            'Content-Type': 'multipart/form-data',
-            ...options.headers
-        };
         return await customFetch.post(`v2/contact/${mode}`, formdata, options);
     } catch(err) {
         throw new utils.ConnectorError(err?.code, err?.message, err?.messageCode);
