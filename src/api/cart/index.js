@@ -201,6 +201,23 @@ const setCartShipment = async ({cartId, shipment, deliveryAddress, locale ='fr'}
 };
 
 /**
+ * Set comment in cart
+ * @async
+ * @param {Object} body - The body of the request
+ * @param {String} body.cartId - The ID of the cart
+ * @param {String} body.comment - The comment to set
+ * @param {Object} options - Fetch options (default: {})
+ * @returns An object with the cart data
+ */
+const setCartComment = async ({cartId, comment}, options = {}) => {
+    try {
+        return await customFetch.put('v2/cart/comment', { cartId, comment }, options);
+    } catch (err) {
+        throw new utils.ConnectorError(err?.code, err?.message, err?.messageCode);
+    }
+}
+
+/**
  * Delete shipment method in cart
  * @async
  * @param {Object} body - The body of the request
@@ -245,6 +262,7 @@ module.exports = {
     setCartAddresses,
     getShipmentCart,
     setCartShipment,
+    setCartComment,
     deleteCartShipment,
     cartToOrder
 }
