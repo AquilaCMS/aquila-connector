@@ -76,6 +76,7 @@ class FetchInstance {
                 case contentType.includes('text/html'):
                     parsedResponse = await response.text();
                     break;
+                case contentType.includes('application/pdf'):
                 case contentType.includes('application/blob'):
                     parsedResponse = await response.blob();
                     break;
