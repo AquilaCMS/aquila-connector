@@ -54,46 +54,45 @@ class FetchInstance {
     
         try {
             const response = await fetch(url, fetchOptions);
+            if (response.ok) {
+                // If the response is empty, return null
+                if (response.status === 204) {
+                    return null;
+                }
+
+                // Handle different response types
+                const contentType = response.headers.get('content-type');
+                let parsedResponse;
+                switch (true) {
+                    case contentType.includes('application/json'):
+                        parsedResponse = await response.json();
+                        break;
+                    case contentType.includes('text/html'):
+                        parsedResponse = await response.text();
+                        break;
+                    case contentType.includes('application/pdf'):
+                    case contentType.includes('application/blob'):
+                        parsedResponse = await response.blob();
+                        break;
+                    case contentType.includes('text/plain'):
+                        parsedResponse = await response.text();
+                        break;
+                    case contentType.includes('application/octet-stream'):
+                        parsedResponse = await response.arrayBuffer();
+                        break;
+                    case contentType.includes('multipart/form-data'):
+                        parsedResponse = await response.formData();
+                        break;
+                    default:
+                        throw new Error(`[Aquila Connector] fetch error on "${endpoint}" | Unsupported response type: ${contentType}`);
+                }
+
+                return parsedResponse;
+            }
 
             // Handle HTTP errors
-            if (!response.ok) {
-                const tempParsedResponse = await response.json();
-                throw new utils.ConnectorError(response.status, tempParsedResponse?.message, tempParsedResponse?.code);
-            }
-
-            // If the response is empty, return null
-            if (response.status === 204) {
-                return null;
-            }
-
-            // Handle different response types
-            const contentType = response.headers.get('content-type');
-            let parsedResponse;
-            switch (true) {
-                case contentType.includes('application/json'):
-                    parsedResponse = await response.json();
-                    break;
-                case contentType.includes('text/html'):
-                    parsedResponse = await response.text();
-                    break;
-                case contentType.includes('application/pdf'):
-                case contentType.includes('application/blob'):
-                    parsedResponse = await response.blob();
-                    break;
-                case contentType.includes('text/plain'):
-                    parsedResponse = await response.text();
-                    break;
-                case contentType.includes('application/octet-stream'):
-                    parsedResponse = await response.arrayBuffer();
-                    break;
-                case contentType.includes('multipart/form-data'):
-                    parsedResponse = await response.formData();
-                    break;
-                default:
-                    throw new Error(`[Aquila Connector] fetch error on "${endpoint}" | Unsupported response type: ${contentType}`);
-            }
-
-            return parsedResponse;
+            const tempParsedResponse = await response.json();
+            throw new Error(`[Aquila Connector] fetch error on "${endpoint}" | Something went wrong : ${response.status}, ${tempParsedResponse?.message}, ${tempParsedResponse?.code}`);
         } catch (error) {
             console.error(`[Aquila Connector] fetch error on "${endpoint}" |`, error);
             throw new utils.ConnectorError(error.code, error?.message, error?.messageCode);
