@@ -91,8 +91,8 @@ class FetchInstance {
             }
 
             // Handle HTTP errors
-            const tempParsedResponse = await response.json();
-            throw new Error(`[Aquila Connector] fetch error on "${endpoint}" | Something went wrong : ${response.status}, ${tempParsedResponse?.message}, ${tempParsedResponse?.code}`);
+            //const tempParsedResponse = await response.json();
+            throw new Error(`[Aquila Connector] fetch error on "${endpoint}" | Something went wrong : ${response.status}`);
         } catch (error) {
             console.error(`[Aquila Connector] fetch error on "${endpoint}" |`, error);
             throw new utils.ConnectorError(error.code, error?.message, error?.messageCode);
